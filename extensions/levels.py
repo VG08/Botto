@@ -2,19 +2,28 @@ import lightbulb
 import hikari   
 import aiosqlite
 
-xp_for_lvl_1 = 50
+XP_FOR_LVL_1 = 50
+# Defined but never used
 
 plugin = lightbulb.Plugin("levels")
 
 async def add_xp(row: aiosqlite.Row):
     db = await aiosqlite.connect("bot.db")
+    
     sql = """UPDATE levels SET xp = ? WHERE user_id=?"""
     try:
         await db.execute(sql, ((row[1]+1),row[0]))
+
+        # in row[1] and row [0], does this mean the xp_integer and user_id row?
+        # why is it row and not column?
+        # shoudn't it be column..?
+        # I'm so confused...
+
         await db.commit()
         sql = """UPDATE levels SET msg_before_xp = 0 WHERE user_id=?"""
-        await db.execute(sql,(row[0],))
+        await db.execute(sql,(row[0]))
         await db.commit()
+        
     except Exception as e:
         print(e)
 
@@ -64,17 +73,15 @@ async def on_message(event: hikari.GuildMessageCreateEvent):
 @plugin.command
 @lightbulb.command("xp", "Gives ur xp")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
-async def ping(ctx: lightbulb.Context) -> None:
+async def xp(ctx: lightbulb.Context) -> None:
+
     # Send a message to the channel the command was used in
-    r = await get_xp(ctx.author.id)
+    xp_number = await get_xp(ctx.author.id)
     await ctx.respond(
-        f"You have {r[1]}xp"
+        f"You have {xp_number[1]} xp"
     )
 
-
-        
-
-
+# Loading the plugin
 def load(bot):
     bot.add_plugin(plugin)
 
