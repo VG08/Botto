@@ -120,6 +120,13 @@ async def queue(ctx: lightbulb.Context) -> None:
     except Exception as e:  
         
         await ctx.respond(e)
+@plugin.command
+@lightbulb.command("leave", "leave the music channel")
+@lightbulb.implements(lightbulb.SlashCommand, lightbulb.PrefixCommand)
+async def leave(ctx: lightbulb.Context) -> None:
+    pass
+    #TODO: make a leave command, haven't made till now because can't figure out how
+    await ctx.respond("not implemented yet")
 
 
 def load(bot):
