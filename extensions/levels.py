@@ -3,7 +3,6 @@ import hikari
 import aiosqlite
 
 XP_FOR_LVL_1 = 50
-# Defined but never used
 
 plugin = lightbulb.Plugin("levels")
 
@@ -13,12 +12,7 @@ async def add_xp(row: aiosqlite.Row):
     sql = """UPDATE levels SET xp = ? WHERE user_id=?"""
     try:
         await db.execute(sql, ((row[1]+1),row[0]))
-
-        # in row[1] and row [0], does this mean the xp_integer and user_id row?
-        # why is it row and not column?
-        # shoudn't it be column..?
-        # I'm so confused...
-
+        
         await db.commit()
         sql = """UPDATE levels SET msg_before_xp = 0 WHERE user_id=?"""
         await db.execute(sql,(row[0]))
