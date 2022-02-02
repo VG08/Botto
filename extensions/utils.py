@@ -11,7 +11,7 @@ async def ping(ctx: lightbulb.Context) -> None:
         "Pong! it took me " + str(int(ctx.bot.heartbeat_latency * 1000)) + "ms"
     )
 
-
+# Loading
 def load(bot):
     bot.add_plugin(plugin)
 

@@ -5,31 +5,30 @@ import aiosqlite
 
 plugin = lightbulb.Plugin("tag")
 
-
-
 async def create_tag( tag, content, author_id):
-    print("herem")
+    # wow nice tests :stonks:
+    print("command atleast runs")
     db = await aiosqlite.connect("bot.db")
-    print('fsdf')
+    print('db is connected')
     sql = """INSERT INTO tags(author_id,title,uses,content) VALUES(?, ?, ?, ?) """
-    print('fsdf')
+    print('added tag successfully')
     try:
         await db.execute(sql, (author_id, tag,0, content))
         await db.commit()
     except Exception as e:
         print(e)
-    print("jhere")
+    print("everything is successful")
 
 async def get_tag(title):
     db = await aiosqlite.connect("bot.db")
    
     try:
-        print("here")
+
         sql = """SELECT * FROM tags WHERE title=?"""
         cursor = await db.execute(sql, (title,))
         row = await cursor.fetchone()
     except Exception as e:
-        print("here2")
+        print("exception test")
         print(e)
     return row
 
@@ -176,6 +175,7 @@ async def list_tag(ctx: lightbulb.Context):
     except Exception as e:
         print(e)
 
+# Loading
 def load(bot):
     bot.add_plugin(plugin)
 
