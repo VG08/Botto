@@ -16,9 +16,14 @@ def initialize():
                                         lvl integer,
                                         msg_before_xp integer
                                     ); """
+    modmail_table_sql = """ CREATE TABLE IF NOT EXISTS modmail (
+                                    user_id integer PRIMARY KEY,
+                                    channel_id integer NOT NULL
+                                ); """
 
     c.execute(tags_table_sql)
     c.execute(levels_table_sql)
+    c.execute(modmail_table_sql)
 
 if __name__ == "__main__":
     initialize()

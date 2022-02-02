@@ -11,24 +11,6 @@ plugin = lightbulb.Plugin("music")
 
 
 # Components
-class MyView(miru.View):
-
-    @miru.button(emoji="⏭️", style=hikari.ButtonStyle.PRIMARY)
-    async def rock_button(self, button: miru.Button, interaction: miru.Interaction):
-        await interaction.send_message(content="Paper!")
-
-    @miru.button(emoji="⏯️", style=hikari.ButtonStyle.PRIMARY)
-    async def paper_button(self, button: miru.Button, interaction: miru.Interaction):
-        await interaction.send_message(content="Scissors!")
-
-    @miru.button( emoji="⏮️", style=hikari.ButtonStyle.PRIMARY)
-    async def scissors_button(self, button: miru.Button, interaction: miru.Interaction):
-        await interaction.send_message(content="Rock!")
-
-    @miru.button(emoji="❌", style=hikari.ButtonStyle.DANGER, row=2)
-    async def stop_button(self, button: miru.Button, interaction: miru.Interaction):
-        self.stop()  # Stop listening for interactions
-
 
 queues: dict[int, Queue] = {}
 
@@ -136,10 +118,9 @@ async def queue(ctx: lightbulb.Context) -> None:
         )
         guild = ctx.get_guild()
         em.set_footer(f"Botto", icon=ctx.bot.application.icon_url)
-        view = MyView(ctx.bot, timeout=120)
         for index, i in enumerate(queue):
             em.add_field(name=f"{index + 1}. {(await i.metadata()).title}", value=(await i.metadata()).artist)
-        await ctx.respond(embed=em, components=view.build())
+        await ctx.respond(embed=em)
     except Exception as e:
 
         await ctx.respond(e)
