@@ -1,9 +1,12 @@
 import lightbulb
 import hikari
-import json
 import datetime
 import aiosqlite
-from .. import config
+import config
+
+#Config variables
+GUILD = config.GUILD_ID
+CATEGORY =config.MODMAIL_CATEGORY
 plugin = lightbulb.Plugin("modmail")
 
 async def get_mail_by_user_id(user_id):
@@ -54,28 +57,6 @@ async def Cmail(ctx: lightbulb.Context) -> None:
     else:
         await ctx.respond("This channel is not a modmail thread")
 
-    # f = open("modmails.json", "r")
-    # mails = json.load(f)
-    # m = mails.copy()
-    # mails_channels = m.items()
-    # for key, value in mails_channels:
-    #     if value == f"{ctx.channel_id}":
-    #         print(key)
-
-    #         # await dm.send("Staff has closed this modmail thread, if you still have any problem feel free to dm me")
-    #         channel = await ctx.bot.rest.fetch_channel(value)
-    #         print(mails)
-    #         print(mails[f"{key}"])
-    #         mails.pop(f"{key}")
-
-    #         await channel.delete()
-    #         f = open("modmails.json", "w")
-    #         json.dump(mails, f)
-    #         f.close()
-    #         return
-    # await ctx.respond("Not a modmail thread")
-
-
 @plugin.listener(hikari.GuildMessageCreateEvent)
 async def onMessage(event: hikari.GuildMessageCreateEvent):
     if event.is_bot or not event.content:
@@ -100,14 +81,14 @@ async def onDM(event: hikari.DMMessageCreateEvent):
         return
 
     row = await get_mail_by_user_id(event.author_id)
-    guild = plugin.bot.cache.get_guild(927835307989159977)
+    guild = plugin.bot.cache.get_guild(GUILD)
 
     if row:
         channel = plugin.bot.cache.get_guild_channel(row[1])
     else:
         channel = await guild.create_text_channel(
              name=event.author_id,
-             category=927841708392189963,
+             category=CATEGORY,
          )
         await create_mail(event.author_id, channel.id) 
     em = hikari.Embed(
