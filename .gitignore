@@ -3,3 +3,7 @@ __pycache__
 extensions/__pycache__
 venv/
 bot.db
+.idea
+extensions/t.json
+logs/
+config.py
