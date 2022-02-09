@@ -14,12 +14,14 @@ async def get_mail_by_user_id(user_id):
     sql = """SELECT * FROM modmail WHERE user_id=?"""
     cursor = await db.execute(sql, (user_id,))
     row = await cursor.fetchone()
+    await db.close()
     return row
 async def get_mail_by_channel_id(channel_id):
     db = await aiosqlite.connect("bot.db")
     sql = """SELECT * FROM modmail WHERE channel_id=?"""
     cursor = await db.execute(sql, (channel_id,))
     row = await cursor.fetchone()
+    await db.close()
     return row
 
 async def create_mail(user_id, channel_id):
@@ -27,6 +29,7 @@ async def create_mail(user_id, channel_id):
     sql = """INSERT INTO modmail(user_id, channel_id) VALUES(?, ?) """
     await db.execute(sql, (user_id, channel_id))
     await db.commit()
+    await db.close()
 
 
 async def delete_mail(channel_id):
@@ -34,6 +37,7 @@ async def delete_mail(channel_id):
     sql = """DELETE FROM modmail WHERE channel_id = ?"""
     await db.execute(sql, (channel_id,))
     await db.commit()
+    await db.close()
 
 @plugin.command
 @lightbulb.command("cmail", "Closes the modmail in the current channel")

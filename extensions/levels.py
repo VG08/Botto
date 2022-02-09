@@ -15,20 +15,21 @@ async def add_xp(row: aiosqlite.Row):
     sql = """UPDATE levels SET msg_before_xp = 0 WHERE user_id=?"""
     await db.execute(sql,(row[0],))
     await db.commit()
-
+    await db.close()
 
 async def get_xp(user_id) -> aiosqlite.Row:
     db = await aiosqlite.connect("bot.db")   
     sql = """SELECT * FROM levels WHERE user_id=?"""
     cursor = await db.execute(sql, (user_id,))
     row = await cursor.fetchone()
-
+    await db.close()
     return row
     
 async def give_xp_before_msg(user_id, before_msg_xp):
     db = await aiosqlite.connect("bot.db")
     sql = """UPDATE levels SET msg_before_xp = ? WHERE user_id=?"""
     await db.execute(sql, (before_msg_xp, user_id))
+    await db.close()
     await db.commit()
 
 
@@ -37,6 +38,7 @@ async def add_user(user_id):
     db = await aiosqlite.connect("bot.db")
     sql = """INSERT INTO levels(user_id, xp,lvl, msg_before_xp) VALUES(?,?,?, ?) """
     await db.execute(sql, (user_id, 0,0, 1))
+    await db.close()
     await db.commit()
    
 

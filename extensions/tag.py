@@ -5,68 +5,51 @@ import aiosqlite
 
 plugin = lightbulb.Plugin("tag")
 
+
+
 async def create_tag( tag, content, author_id):
-    # wow nice tests :stonks:
-    print("command atleast runs")
     db = await aiosqlite.connect("bot.db")
-    print('db is connected')
     sql = """INSERT INTO tags(author_id,title,uses,content) VALUES(?, ?, ?, ?) """
-    print('added tag successfully')
-    try:
-        await db.execute(sql, (author_id, tag,0, content))
-        await db.commit()
-    except Exception as e:
-        print(e)
-    print("everything is successful")
+    await db.execute(sql, (author_id, tag,0, content))
+    await db.commit()
+    await db.close()
 
 async def get_tag(title):
     db = await aiosqlite.connect("bot.db")
-   
-    try:
-
-        sql = """SELECT * FROM tags WHERE title=?"""
-        cursor = await db.execute(sql, (title,))
-        row = await cursor.fetchone()
-    except Exception as e:
-        print("exception test")
-        print(e)
+    sql = """SELECT * FROM tags WHERE title=?"""
+    cursor = await db.execute(sql, (title,))
+    row = await cursor.fetchone()
+    await db.close()
     return row
 
 async def add_use(row: sqlite3.Row):
     db = await aiosqlite.connect("bot.db")
     sql = """UPDATE tags SET uses = ? WHERE title=?"""
-    try:
-        await db.execute(sql, ((row[2]+1),row[1]))
-        await db.commit()
-    except Exception as e:
-        print(e)
+    await db.execute(sql, ((row[2]+1),row[1]))
+    await db.commit()
+    await db.close()
 
 async def update_content(title, content):
     db = await aiosqlite.connect("bot.db")
     sql = """UPDATE tags SET content = ? WHERE title=?"""
-    try:
-        await db.execute(sql, (content, title))
-        await db.commit()
-    except Exception as e:
-        print(e)
+    await db.execute(sql, (content, title))
+    await db.commit()
+    await db.close()
 
 async def delete_tag(title):
     db = await aiosqlite.connect("bot.db")
     sql = """DELETE FROM tags WHERE title = ?"""
-    try:
-        await db.execute(sql, (title,))
-        await db.commit()
-    except Exception as e:
-        print(e)
+    await db.execute(sql, (title,))
+    await db.commit()
+    await db.close()
 async def tag_list(author_id):
     db = await aiosqlite.connect("bot.db")
     sql = """SELECT * FROM tags where author_id=?"""
-    try:
-        cur = await db.execute(sql, (author_id,))
-        await db.commit()
-        return await cur.fetchall()
-    except Exception as e:
-        print(e)
+    cur = await db.execute(sql, (author_id,))
+    await db.commit()
+    await db.close()
+    return await cur.fetchall()
+
 
 @plugin.command
 @lightbulb.option("title", "Title of the tag", required=True, type=str)
@@ -175,7 +158,6 @@ async def list_tag(ctx: lightbulb.Context):
     except Exception as e:
         print(e)
 
-# Loading
 def load(bot):
     bot.add_plugin(plugin)
 
