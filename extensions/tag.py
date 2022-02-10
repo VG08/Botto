@@ -47,10 +47,10 @@ async def tag_list(author_id):
     sql = """SELECT * FROM tags where author_id=?"""
     cur = await db.execute(sql, (author_id,))
     await db.commit()
-    rows = cur.fetchall()
+    rows = await cur.fetchall()
     await db.close()
 
-    return await rows
+    return  rows
    
     
 
