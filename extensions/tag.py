@@ -49,7 +49,6 @@ async def tag_list(author_id):
     await db.commit()
     rows = await cur.fetchall()
     await db.close()
-
     return  rows
    
     
@@ -149,13 +148,15 @@ async def tag_edit(ctx: lightbulb.Context):
 @lightbulb.implements(lightbulb.PrefixSubCommand)
 async def list_tag(ctx: lightbulb.Context):
     if ctx.options.member:
-        tags = await tag_list(ctx.options.member.id)
+        user = ctx.options.member
+        tags = await tag_list(user.id)
     else:    
-        tags = await tag_list(ctx.author.id)
+        user = ctx.author
+        tags = await tag_list(user.id)
     print(tags)
     print(type(tags))
     try:
-        em = hikari.Embed(title=f"Tags", description=f" - {ctx.options.member.username}")
+        em = hikari.Embed(title=f"Tags", description=f" - {user.username}")
         for tag in tags:
             em.add_field(tag[1], f"uses : {tag[2]}")
         await ctx.respond(embed=em)
