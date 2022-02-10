@@ -66,7 +66,7 @@ async def on_message(event: hikari.GuildMessageCreateEvent):
 async def check_xp(ctx: lightbulb.Context) -> None:
     row = await get_xp(ctx.author.id)
     await ctx.respond(
-        f"You have {row[2]}xp"
+        f"You have {row[1]}xp"
     )
 
 
