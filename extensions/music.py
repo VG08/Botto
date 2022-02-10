@@ -79,7 +79,7 @@ async def start_lavalink(event: hikari.ShardReadyEvent) -> None:
         # TOKEN can be an empty string if you don't want to use lavasnek's discord gateway.
         lavasnek_rs.LavalinkBuilder(event.my_user.id, config.TOKEN)
         # This is the default value, so this is redundant, but it's here to show how to set a custom one.
-        .set_host("lavalink.devin-dev.xyz").set_password("lava123").set_port(443).set_is_ssl(True)
+        .set_host("lavalink.scpcl.site").set_password("lvserver").set_port(443).set_is_ssl(True)
     )
 
     if HIKARI_VOICE:

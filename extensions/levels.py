@@ -29,8 +29,8 @@ async def give_xp_before_msg(user_id, before_msg_xp):
     db = await aiosqlite.connect("bot.db")
     sql = """UPDATE levels SET msg_before_xp = ? WHERE user_id=?"""
     await db.execute(sql, (before_msg_xp, user_id))
-    await db.close()
     await db.commit()
+    await db.close()
 
 
 
@@ -38,8 +38,9 @@ async def add_user(user_id):
     db = await aiosqlite.connect("bot.db")
     sql = """INSERT INTO levels(user_id, xp,lvl, msg_before_xp) VALUES(?,?,?, ?) """
     await db.execute(sql, (user_id, 0,0, 1))
-    await db.close()
     await db.commit()
+    await db.close()
+
    
 
 @plugin.listener(hikari.GuildMessageCreateEvent)
