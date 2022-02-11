@@ -5,4 +5,4 @@ Right now, the bot is in development. We will start making releases when it's st
 
 # 🤚 Contribution
 
-To contribute, request VG08 for the contributor permission. Until then, contribute the repository by forking it! :)
+To contribute, first fork the repo and make atleast 3 PRs. If we like your changes to the repo, we might add you as a contributor :) You can always contribute my forking and sending pull requests by the way. Have fun!
