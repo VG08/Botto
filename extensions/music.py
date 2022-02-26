@@ -5,7 +5,7 @@ from songbird import YtdlError, ytdl, Driver, Queue
 import songbird
 from songbird.hikari import Voicebox
 import datetime
-import miru
+# import miru
 
 plugin = lightbulb.Plugin("music")
 

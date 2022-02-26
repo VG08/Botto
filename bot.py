@@ -7,7 +7,6 @@ if os.name != "nt":
     import uvloop
     
     uvloop.install()
-    # Can I have a clear explanation to this?
 
 # Bot setup 
 database.initialize()
@@ -17,7 +16,7 @@ with open("token", "r") as f:
 bot = lightbulb.BotApp(
     token = TOKEN,
     prefix = "b!",
-    default_enabled_guilds = (927835307989159977)
+    default_enabled_guilds = (927835307989159977, 872490089731723365)
 )
 
 # NOTE TO VG08:
