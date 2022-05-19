@@ -7,7 +7,6 @@ if os.name != "nt":
     import uvloop
     
     uvloop.install()
-    # Can I have a clear explanation to this?
 
 # Bot setup 
 database.initialize()
@@ -20,9 +19,6 @@ bot = lightbulb.BotApp(
     default_enabled_guilds = (927835307989159977)
 )
 
-# NOTE TO VG08:
-# Add the token to a .py file, this is useful since you can add more secrets later and
-# is especially more useful when you deal with secrets that are not of type: str
 
 for file in os.listdir("extensions"):
     if file.endswith("py"):

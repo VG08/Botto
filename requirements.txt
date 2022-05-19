@@ -1,6 +1,6 @@
 aiohttp==3.8.1
 aiosignal==1.2.0
-psycopg2
+psycopg2-binary
 aiosqlite==0.17.0
 async-timeout==4.0.2
 attrs==21.4.0
@@ -8,11 +8,11 @@ certifi==2021.10.8
 charset-normalizer==2.0.11
 colorlog==6.6.0
 frozenlist==1.3.0
-hikari==2.0.0.dev105
+hikari
 hikari-lightbulb==2.1.3
 hikari-miru==0.6.3
 idna==3.3
-lavasnek-rs==0.1.0a3
+lavasnek-rs
 multidict==5.2.0
 mutagen==1.45.1
 pure25519==0.0.1
